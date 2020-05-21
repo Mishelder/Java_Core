@@ -1,7 +1,7 @@
-package JavaException.OneResources.TryWithoutResources;
+package JavaException.Lab_First.TryWithoutResources;
 
-import JavaException.AutoCloseableFactory;
-import JavaException.TryBody;
+import JavaException.Lab_First.AutoCloseableFactory;
+import JavaException.Lab_First.TryBody;
 
 public class TryWithoutResource {
 
