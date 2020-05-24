@@ -52,9 +52,6 @@ public class UTF8Converter {
         return a;
     }
 
-
-
-
     public static int[] convertUTF8toCodePoint(byte[] utf8) {
         int[] result = new int[utf8.length];
         int posIn = 0;
@@ -110,5 +107,43 @@ public class UTF8Converter {
             }
         }
         return Arrays.copyOfRange(result, 0, size);
+    }
+
+    public static byte[] convertCodePointToUTF8(int[] codePoint) {
+        byte[] result = new byte[4 * codePoint.length];
+        int posIn = 0;
+        int posOut = 0;
+        while (posIn < codePoint.length) {
+            int point = codePoint[posIn++];
+            if (point < 0x00000080) {
+                result[posOut++] = (byte) point;
+            } else if(point< 0x0000800) {
+                result[posOut++] = (byte) (((point >> 6) & 0b00011111) | 0b11000000);
+                result[posOut++] = (byte) ((point & 0b00111111) | 0b10000000);
+            }else if(point< 0x0010000){
+                result[posOut++] = (byte) (((point >> 7) & 0b11111111) | 0b11100000);
+                result[posOut++] = (byte) (((point >> 6) & 0b11111111) | 0b10000000);
+                result[posOut++] = (byte) ((point & 0b00011111) | 0b10000000);
+            }else if(point< 0x0200000){
+                result[posOut++] = (byte) (((point >> 8) & 0b00000111) | 0b11110000);
+                result[posOut++] = (byte) (((point >> 7) & 0b00001111) | 0b10000000);
+                result[posOut++] = (byte) (((point >> 6) & 0b00001111) | 0b10000000);
+                result[posOut++] = (byte) ((point & 0b00001111) | 0b10000000);
+            }else if(point< 0x4000000 ){
+                result[posOut++] = (byte) (((point >> 9) & 0b00000011) | 0b11111000);
+                result[posOut++] = (byte) (((point >> 8) & 0b00000111) | 0b10000000);
+                result[posOut++] = (byte) (((point >> 7) & 0b00000111) | 0b10000000);
+                result[posOut++] = (byte) (((point >> 6) & 0b00000111) | 0b10000000);
+                result[posOut++] = (byte) ((point & 0b00000111) | 0b10000000);
+            }else{
+                result[posOut++] = (byte) (((point >> 10) & 0b00000001) | 0b11111100);
+                result[posOut++] = (byte) (((point >> 9) & 0b00000011) | 0b10000000);
+                result[posOut++] = (byte) (((point >> 8) & 0b00000011) | 0b10000000);
+                result[posOut++] = (byte) (((point >> 7) & 0b00000011) | 0b10000000);
+                result[posOut++] = (byte) (((point >> 6) & 0b00000011) | 0b10000000);
+                result[posOut++] = (byte) ((point & 0b00000011) | 0b10000000);
+            }
+        }
+        return Arrays.copyOfRange(result, 0, posOut);
     }
 }
