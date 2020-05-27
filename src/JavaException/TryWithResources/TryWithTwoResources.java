@@ -1,7 +1,7 @@
-package JavaException.Lab_First.TryWithResources;
+package JavaException.TryWithResources;
 
-import JavaException.Lab_First.AutoCloseableFactory;
-import JavaException.Lab_First.TryBody;
+import JavaException.AutoCloseableFactory;
+import JavaException.TryBody;
 
 public class TryWithTwoResources {
 

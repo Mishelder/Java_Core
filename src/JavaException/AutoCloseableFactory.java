@@ -1,4 +1,4 @@
-package JavaException.Lab_First;
+package JavaException;
 
 public interface AutoCloseableFactory {
 
