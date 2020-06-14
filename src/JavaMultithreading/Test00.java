@@ -1,6 +1,6 @@
 package JavaMultithreading;
 
-public class Test {
+public class Test00 {
 
     public static void main(String[] args) throws InterruptedException {
         for(int k=1;k<Integer.MAX_VALUE;k++){
